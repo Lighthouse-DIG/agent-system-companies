@@ -1,13 +1,3 @@
 /.ipynb_checkpoints/
-/dist/
-/stock_analysis/**/__pycache__/
-/workspace.code-workspace
-/stock_analysis/.vscode/
-/.vscode/
-/config.json
-/*.pyc
-/stock_analysis/*.pyc
-/stock_analysis/**/*.pyc
-
-
-
+/.vscode
+.env
