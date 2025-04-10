@@ -1,5 +1,5 @@
-from src.request_api import RequestsApi
-from src.acquisition.acquisition.readers.reader import Reader
+from request_api import RequestsApi
+from acquisition.acquisition.readers.reader import Reader
 import requests
 
 class RequestsReader(Reader):

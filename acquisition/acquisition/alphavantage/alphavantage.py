@@ -1,10 +1,10 @@
 from functools import wraps
 import time
-from src.acquisition.acquisition.readers.alphavantage_reader import AlphavantageReader
-from src.acquisition.acquisition.errors.check_alphavantage import ErrorsResponseApiAlphavantage
-from src.exceptions.acquisition_exceptions import AlphaVantageError
-from src.tools.mappers import switch_none
-from src.view.acquisition.acquisition.status_api import ApiShowStatus
+from acquisition.acquisition.readers.alphavantage_reader import AlphavantageReader
+from acquisition.acquisition.errors.check_alphavantage import ErrorsResponseApiAlphavantage
+from exceptions.acquisition_exceptions import AlphaVantageError
+from tools.mappers import switch_none
+
 
 class AlphaVantage:
 
@@ -21,7 +21,6 @@ class AlphaVantage:
         self.config(delays)
         self.__check_response = ErrorsResponseApiAlphavantage()
         self._reader = AlphavantageReader(base_url=self._AV_URL, **kwargs)
-        self.show_status = ApiShowStatus()
 
     @property
     def default_params(self):
@@ -43,11 +42,9 @@ class AlphaVantage:
             if count_attemps != 0:
                 #try again
                 delay = self.delays[count_attemps-1]
-                self.show_status.notify_sleeping(delay)
                 time.sleep(delay)
 
             count_attemps += 1 #attemp n
-            self.show_status.notify_try_connect('Alphavantage')
             response = self._reader(query)
 
             if not isinstance(response, dict):
@@ -57,11 +54,9 @@ class AlphaVantage:
                 try:
                     self.__check_response.pass_test(response, query)
                 except AlphaVantageError as error:
-                    self.show_status.notify_error_format(error)
                     error_response = error
                 else:
                     #connect successful, save useful data
-                    self.show_status.notify_json_received_succesfully()
                     return response
         else:
             return query, str(error_response)

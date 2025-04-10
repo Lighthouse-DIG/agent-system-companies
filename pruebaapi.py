@@ -1,0 +1,1 @@
+from acquisition.acquisition.alphavantage.fundamental_data import FundamentalData

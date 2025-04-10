@@ -1,4 +1,4 @@
-from src.acquisition.acquisition.alphavantage.alphavantage import AlphaVantage 
+from acquisition.acquisition.alphavantage.alphavantage import AlphaVantage 
 
 class Cryptocurrencis(AlphaVantage):
     '''

@@ -1,5 +1,5 @@
-from src.acquisition.acquisition.readers.requests_reader import  RequestsReader
-from src.acquisition.acquisition.readers.extended_csv_reader import  ReaderExtendedCSV
+from acquisition.acquisition.readers.requests_reader import  RequestsReader
+from acquisition.acquisition.readers.extended_csv_reader import  ReaderExtendedCSV
 
 
 class AlphavantageReader(RequestsReader):
