@@ -19,13 +19,10 @@ class RequestsReader(Reader):
     def __call__(self, query, **kwargs):
         
         try:
-            self._show_status.notify_try_connect(query)
             response = self.request.get(params=query, **kwargs)
         
         except requests.exceptions.RequestException as error:
-            self._show_status.notify_error()
             return error
 
         else:
-            self.show_status.notify_not_error()
             return response.json()

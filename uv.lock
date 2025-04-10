@@ -10,6 +10,7 @@ dependencies = [
     { name = "httpx" },
     { name = "mcp", extra = ["cli"] },
     { name = "pandas" },
+    { name = "python-dotenv" },
     { name = "requests" },
 ]
 
@@ -18,6 +19,7 @@ requires-dist = [
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "mcp", extras = ["cli"], specifier = ">=1.6.0" },
     { name = "pandas", specifier = ">=2.2.3" },
+    { name = "python-dotenv", specifier = ">=1.1.0" },
     { name = "requests", specifier = ">=2.32.3" },
 ]
 
