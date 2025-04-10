@@ -7,5 +7,5 @@ load_dotenv()
 
 # Obtener la API Key desde las variables de entorno
 apikey = os.getenv("ALPHAVANTAGE_API_KEY")
-data = FundamentalData(apikey=apikey).get_overview(symbol="GOOG")
+data = FundamentalData(apikey=apikey).get_overview(symbol="GOOGL")
 print(data)
