@@ -1,5 +1,6 @@
 from typing import Any
 import httpx
+import os
 from dotenv import load_dotenv
 from mcp.server.fastmcp import FastMCP
 from acquisition.acquisition.alphavantage.fundamental_data import FundamentalData
