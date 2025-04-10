@@ -1,5 +1,5 @@
 from pandas import read_csv
-from src.acquisition.acquisition.readers.reader import Reader
+from acquisition.acquisition.readers.reader import Reader
 
 class ReaderExtendedCSV(Reader):
 

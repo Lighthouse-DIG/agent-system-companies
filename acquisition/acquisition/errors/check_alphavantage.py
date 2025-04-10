@@ -1,6 +1,6 @@
-from src.acquisition.acquisition.errors import check_errors
-from src.exceptions.acquisition_exceptions import AlphaVantageError
-from src.tools.mappers import map_dict_from_underscore
+from acquisition.acquisition.errors import check_errors
+from exceptions.acquisition_exceptions import AlphaVantageError
+from tools.mappers import map_dict_from_underscore
 from numpy import isin
 from pandas import to_datetime
 
