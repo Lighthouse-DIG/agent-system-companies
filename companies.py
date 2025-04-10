@@ -1,6 +1,6 @@
 from typing import Any
-import httpx
 import os
+import asyncio
 from dotenv import load_dotenv
 from mcp.server.fastmcp import FastMCP
 from acquisition.acquisition.alphavantage.fundamental_data import FundamentalData
@@ -12,6 +12,10 @@ load_dotenv()
 
 # Obtener la API Key desde las variables de entorno
 apikey = os.getenv("ALPHAVANTAGE_API_KEY")
+
+if not apikey:
+    raise ValueError("ALPHAVANTAGE_API_KEY is not set in the environment variables.")
+
 data_request = FundamentalData(apikey=apikey)
 
 @mcp.tool()
@@ -29,8 +33,10 @@ async def get_overview(symbol: str) -> str:
 
     #if not data["features"]:
     #    return "No active alerts for this state."
-
-    return format_overview(data)
+    elif isinstance(data, dict):
+        return format_overview(data)
+    
+    return "Unexpected error"
 
 
 
