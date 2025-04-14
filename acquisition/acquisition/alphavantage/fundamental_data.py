@@ -12,6 +12,16 @@ class FundamentalData(AlphaVantage):
     def get_overview(self, symbol):
         FUNCTION = 'OVERVIEW'
         return symbol, FUNCTION
+    
+    @AlphaVantage._get_data
+    def get_dividends(self, symbol):
+        FUNCTION = 'DIVIDENDS'
+        return symbol, FUNCTION
+    
+    @AlphaVantage._get_data
+    def get_splits(self, symbol):
+        FUNCTION = 'SPLITS'
+        return symbol, FUNCTION
 
     @AlphaVantage._get_data
     def get_balance_sheet(self, symbol):
@@ -31,6 +41,11 @@ class FundamentalData(AlphaVantage):
     @AlphaVantage._get_data
     def get_earnings(self, symbol):
         FUNCTION = 'EARNINGS'
+        return symbol, FUNCTION
+    
+    @AlphaVantage._get_data
+    def get_etf_metrics(self, symbol):
+        FUNCTION = 'ETF_PROFILE'
         return symbol, FUNCTION
 
     @AlphaVantage._get_data
