@@ -28,7 +28,7 @@ data_request = FundamentalData(apikey=apikey)
 async def async_call(function, data):
     try:
         # Ejecuta la llamada en un hilo aparte (no bloquea el event loop)
-        return await asyncio.to_thread(getattr(data_request, function)(data))
+        return await asyncio.to_thread(getattr(data_request, function)(symbol=data))
     except Exception as error:
         print(f"Error en async_call: {error}")
         return error
