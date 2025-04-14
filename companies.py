@@ -1,14 +1,15 @@
 from typing import Any
 import os
-import asyncio
 from dotenv import load_dotenv, find_dotenv
 from mcp.server.fastmcp import FastMCP
 from acquisition.acquisition.alphavantage.fundamental_data import FundamentalData
 from format_tool.format_fundamental import KeyValueRecursiveFlatten
 
+name = "companies"
+USER_AGENT = f"{name}-app/1.0"
 formatter_ = KeyValueRecursiveFlatten()
 # Initialize FastMCP server
-mcp = FastMCP("companies_analysis")
+mcp = FastMCP(name)
 
 load_dotenv()
 env_path = find_dotenv()
@@ -49,8 +50,6 @@ async def get_overview(symbol: str) -> str:
         return formatter_(data)
     
     return "Unexpected error"
-
-
 
 if __name__ == "__main__":
     # Initialize and run the server
