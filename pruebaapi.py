@@ -13,3 +13,10 @@ print(data)
 print(formatter_(data))
 data = data_request.get_balance_sheet(symbol="GOOGL")
 print(formatter_(data))
+
+async def async_call(function, data):
+    try:
+        return getattr(data_request, function)(data)
+    except Exception as error:
+        return None
+

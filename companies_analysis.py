@@ -8,7 +8,7 @@ from format_tool.format_fundamental import KeyValueRecursiveFlatten
 
 formatter_ = KeyValueRecursiveFlatten()
 # Initialize FastMCP server
-mcp = FastMCP("companies")
+mcp = FastMCP("companies_analysis")
 
 load_dotenv()
 env_path = find_dotenv()
@@ -23,6 +23,12 @@ if not apikey:
 
 data_request = FundamentalData(apikey=apikey)
 
+async def async_call(function, data):
+    try:
+        return getattr(data_request, function)(data)
+    except Exception as error:
+        return None
+
 @mcp.tool()
 async def get_overview(symbol: str) -> str:
     """Get Overview from company
@@ -31,7 +37,8 @@ async def get_overview(symbol: str) -> str:
         symbol: company stock symbol
     """
     
-    data = await asyncio.to_thread(data_request.get_overview, symbol)
+    #data = await asyncio.to_thread(data_request.get_overview, symbol)
+    data = await async_call("get_overview", symbol)
 
     if isinstance(data, tuple):
         return "Unable to fetch company data."
