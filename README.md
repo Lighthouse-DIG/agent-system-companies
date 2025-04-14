@@ -49,8 +49,11 @@ Run the following command to add the necessary packages:
 ```bash 
 uv add httpx>=0.28.1 mcp[cli]>=1.6.0 pandas>=2.2.3 python-dotenv>=1.1.0 requests>=2.32.3
 ``` 
+### 5. Obtain Your API Key
+ - Visit the official Alpha Vantage website to get your free API key: https://www.alphavantage.co/
+ - Click on "GET FREE API KEY."
 
-### 5. Set Up Environment Variables
+### 6. Set Up Environment Variables
 Create a .env file in the root of the project with your Alpha Vantage API key:
 
 ```bash 
