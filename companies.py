@@ -14,11 +14,11 @@ mcp = FastMCP(name)
 
 load_dotenv()
 env_path = find_dotenv()
-print(f"Cargando .env desde: {env_path}")  # Debug
+print(f"Loading .env from: {env_path}")  # Debug
 load_dotenv(env_path)
 
 apikey = os.getenv("ALPHAVANTAGE_API_KEY")
-print(f"API Key: {'Cargada correctamente' if apikey else 'No se encontró'}")
+print(f"API Key: {'Loaded correctly' if apikey else 'Not found'}")
 
 if not apikey:
     raise ValueError("ALPHAVANTAGE_API_KEY is not set in the environment variables.")
