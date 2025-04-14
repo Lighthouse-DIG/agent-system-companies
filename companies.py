@@ -25,13 +25,14 @@ if not apikey:
 
 data_request = FundamentalData(apikey=apikey)
 
-async def async_call(function, data):
+async def async_call(function, symbol):
     try:
         # Ejecuta la llamada en un hilo aparte (no bloquea el event loop)
-        return await asyncio.to_thread(getattr(data_request, function)(symbol=data))
+        return await asyncio.to_thread(getattr(data_request, function), symbol=symbol)
+        #return getattr(data_request, function)(symbol=symbol)
     except Exception as error:
-        print(f"Error en async_call: {error}")
-        return error
+        print(f"Error en async_call: {error}, {symbol}")
+        return f"Error en async_call: {error}, {symbol}"
 
 @mcp.tool()
 async def get_overview(symbol: str) -> str:
@@ -42,7 +43,7 @@ async def get_overview(symbol: str) -> str:
     """
     
     #data = await asyncio.to_thread(data_request.get_overview, symbol)
-    data = await async_call("get_overview", symbol)
+    data = await async_call("get_overview", symbol=symbol)
 
     if isinstance(data, tuple):
         return "Unable to fetch company data."
@@ -63,7 +64,73 @@ async def get_balance_sheet(symbol: str) -> str:
     """
     
     #data = await asyncio.to_thread(data_request.get_overview, symbol)
-    data = await async_call("get_balance_sheet", symbol)
+    data = await async_call("get_balance_sheet", symbol=symbol)
+
+    if isinstance(data, tuple):
+        return "Unable to fetch company data."
+
+    #if not data["features"]:
+    #    return "No active alerts for this state."
+    elif isinstance(data, dict):
+        return formatter_(data)
+    
+    return f"Unexpected error : {data}"
+
+
+@mcp.tool()
+async def get_income_statement(symbol: str) -> str:
+    """Get Income Statement from company
+
+    Args:
+        symbol: company stock symbol
+    """
+    
+    #data = await asyncio.to_thread(data_request.get_overview, symbol)
+    data = await async_call("get_income_statement", symbol=symbol)
+
+    if isinstance(data, tuple):
+        return "Unable to fetch company data."
+
+    #if not data["features"]:
+    #    return "No active alerts for this state."
+    elif isinstance(data, dict):
+        return formatter_(data)
+    
+    return f"Unexpected error : {data}"
+
+
+@mcp.tool()
+async def get_cash_flow(symbol: str) -> str:
+    """Get CASH FLOW from company
+
+    Args:
+        symbol: company stock symbol
+    """
+    
+    #data = await asyncio.to_thread(data_request.get_overview, symbol)
+    data = await async_call("get_cash_flow", symbol=symbol)
+
+    if isinstance(data, tuple):
+        return "Unable to fetch company data."
+
+    #if not data["features"]:
+    #    return "No active alerts for this state."
+    elif isinstance(data, dict):
+        return formatter_(data)
+    
+    return f"Unexpected error : {data}"
+
+
+@mcp.tool()
+async def get_earnings(symbol: str) -> str:
+    """Get Earnings from company
+
+    Args:
+        symbol: company stock symbol
+    """
+    
+    #data = await asyncio.to_thread(data_request.get_overview, symbol)
+    data = await async_call("get_earnings", symbol=symbol)
 
     if isinstance(data, tuple):
         return "Unable to fetch company data."
