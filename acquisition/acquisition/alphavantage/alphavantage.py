@@ -37,7 +37,6 @@ class AlphaVantage:
         count_attemps = 0
         while count_attemps < self.attemps:
             error_response = None
-            status_code = None
 
             if count_attemps != 0:
                 #try again
