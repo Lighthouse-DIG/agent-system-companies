@@ -3,7 +3,7 @@ import time
 from acquisition.acquisition.readers.alphavantage_reader import AlphavantageReader
 from acquisition.acquisition.errors.check_alphavantage import ErrorsResponseApiAlphavantage
 from exceptions.acquisition_exceptions import AlphaVantageError
-from tools.mappers import switch_none
+from helpers.mappers import switch_none
 
 
 class AlphaVantage:
