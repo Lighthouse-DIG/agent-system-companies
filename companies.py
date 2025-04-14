@@ -1,5 +1,6 @@
 from typing import Any
 import os
+import asyncio
 from dotenv import load_dotenv, find_dotenv
 from mcp.server.fastmcp import FastMCP
 from acquisition.acquisition.alphavantage.fundamental_data import FundamentalData
@@ -26,8 +27,10 @@ data_request = FundamentalData(apikey=apikey)
 
 async def async_call(function, data):
     try:
-        return getattr(data_request, function)(data)
+        # Ejecuta la llamada en un hilo aparte (no bloquea el event loop)
+        return await asyncio.to_thread(getattr(data_request, function), data)
     except Exception as error:
+        print(f"Error en async_call: {error}")
         return None
 
 @mcp.tool()
@@ -40,6 +43,27 @@ async def get_overview(symbol: str) -> str:
     
     #data = await asyncio.to_thread(data_request.get_overview, symbol)
     data = await async_call("get_overview", symbol)
+
+    if isinstance(data, tuple):
+        return "Unable to fetch company data."
+
+    #if not data["features"]:
+    #    return "No active alerts for this state."
+    elif isinstance(data, dict):
+        return formatter_(data)
+    
+    return "Unexpected error"
+
+@mcp.tool()
+async def get_balance_sheet(symbol: str) -> str:
+    """Get Balance Sheet from company
+
+    Args:
+        symbol: company stock symbol
+    """
+    
+    #data = await asyncio.to_thread(data_request.get_overview, symbol)
+    data = await async_call("get_balance_sheet", symbol)
 
     if isinstance(data, tuple):
         return "Unable to fetch company data."
