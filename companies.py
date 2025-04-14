@@ -1,17 +1,22 @@
 from typing import Any
 import os
 import asyncio
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from mcp.server.fastmcp import FastMCP
 from acquisition.acquisition.alphavantage.fundamental_data import FundamentalData
-from format_tool.format_overview import format_overview
+from format_tool.format_fundamental import KeyValueRecursiveFlatten
+
+formatter_ = KeyValueRecursiveFlatten()
 # Initialize FastMCP server
 mcp = FastMCP("companies")
 
 load_dotenv()
+env_path = find_dotenv()
+print(f"Cargando .env desde: {env_path}")  # Debug
+load_dotenv(env_path)
 
-# Obtener la API Key desde las variables de entorno
 apikey = os.getenv("ALPHAVANTAGE_API_KEY")
+print(f"API Key: {'Cargada correctamente' if apikey else 'No se encontró'}")
 
 if not apikey:
     raise ValueError("ALPHAVANTAGE_API_KEY is not set in the environment variables.")
@@ -34,7 +39,7 @@ async def get_overview(symbol: str) -> str:
     #if not data["features"]:
     #    return "No active alerts for this state."
     elif isinstance(data, dict):
-        return format_overview(data)
+        return formatter_(data)
     
     return "Unexpected error"
 
