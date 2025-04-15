@@ -12,6 +12,7 @@ from starlette.applications import Starlette  # ASGI framework
 from starlette.requests import Request
 from starlette.responses import HTMLResponse
 from starlette.routing import Mount, Route
+from starlette.responses import PlainTextResponse
 
 import uvicorn  # ASGI server
 from acquisition.acquisition.alphavantage.fundamental_data import FundamentalData
@@ -166,6 +167,11 @@ async def get_earnings(symbol: str) -> str:
 
 
 
+async def verification_file(request: Request) -> PlainTextResponse:
+    content=os.getenv("VERIFICATION_KEY")
+    return PlainTextResponse(content)
+
+
 # HTML for the homepage that displays "MCP Server"
 async def homepage(request: Request) -> HTMLResponse:
     html_content = """
@@ -290,6 +296,7 @@ def create_starlette_app(mcp_server: Server, *, debug: bool = False) -> Starlett
             Route("/", endpoint=homepage),  # Add the homepage route
             Route("/sse", endpoint=handle_sse),  # Endpoint for SSE connections
             Mount("/messages/", app=sse.handle_post_message),  # Endpoint for messages
+            Route("/mcp-verification.txt", endpoint=verification_file)
         ],
     )
 
