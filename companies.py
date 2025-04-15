@@ -5,6 +5,7 @@ from dotenv import load_dotenv, find_dotenv
 from mcp.server.fastmcp import FastMCP
 from acquisition.acquisition.alphavantage.fundamental_data import FundamentalData
 from format_tool.format_fundamental import KeyValueRecursiveFlatten
+from tools.filter_date import filter_annual_reports
 
 name = "companies"
 USER_AGENT = f"{name}-app/1.0"
@@ -56,7 +57,7 @@ async def get_overview(symbol: str) -> str:
     return f"Unexpected error : {data}"
 
 @mcp.tool()
-async def get_balance_sheet(symbol: str) -> str:
+async def get_balance_sheet(symbol: str, start_date:str|None, end_date:str|None) -> str:
     """Get Balance Sheet from company
 
     Args:
@@ -72,13 +73,13 @@ async def get_balance_sheet(symbol: str) -> str:
     #if not data["features"]:
     #    return "No active alerts for this state."
     elif isinstance(data, dict):
-        return formatter_(data)
+        return formatter_(filter_annual_reports(data, start_date=start_date, end_date=end_date))
     
     return f"Unexpected error : {data}"
 
 
 @mcp.tool()
-async def get_income_statement(symbol: str) -> str:
+async def get_income_statement(symbol: str, start_date:str|None, end_date:str|None) -> str:
     """Get Income Statement from company
 
     Args:
@@ -94,13 +95,13 @@ async def get_income_statement(symbol: str) -> str:
     #if not data["features"]:
     #    return "No active alerts for this state."
     elif isinstance(data, dict):
-        return formatter_(data)
+        return formatter_(filter_annual_reports(data, start_date=start_date, end_date=end_date))
     
     return f"Unexpected error : {data}"
 
 
 @mcp.tool()
-async def get_cash_flow(symbol: str) -> str:
+async def get_cash_flow(symbol: str, start_date:str|None, end_date:str|None) -> str:
     """Get CASH FLOW from company
 
     Args:
@@ -116,13 +117,13 @@ async def get_cash_flow(symbol: str) -> str:
     #if not data["features"]:
     #    return "No active alerts for this state."
     elif isinstance(data, dict):
-        return formatter_(data)
+        return formatter_(filter_annual_reports(data, start_date=start_date, end_date=end_date))
     
     return f"Unexpected error : {data}"
 
 
 @mcp.tool()
-async def get_earnings(symbol: str) -> str:
+async def get_earnings(symbol: str, start_date:str|None, end_date:str|None) -> str:
     """Get Earnings from company
 
     Args:
@@ -138,7 +139,7 @@ async def get_earnings(symbol: str) -> str:
     #if not data["features"]:
     #    return "No active alerts for this state."
     elif isinstance(data, dict):
-        return formatter_(data)
+        return formatter_(filter_annual_reports(data, start_date=start_date, end_date=end_date))
     
     return f"Unexpected error : {data}"
 
