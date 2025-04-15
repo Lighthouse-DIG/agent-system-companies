@@ -293,10 +293,13 @@ def create_starlette_app(mcp_server: Server, *, debug: bool = False) -> Starlett
         ],
     )
 
+# Instanciar la aplicación Starlette antes del bloque main
+mcp_server = mcp._mcp_server
+starlette_app = create_starlette_app(mcp_server, debug=True)
 
 if __name__ == "__main__":
     # Get the underlying MCP server from FastMCP wrapper
-    mcp_server = mcp._mcp_server
+    #mcp_server = mcp._mcp_server
 
     import argparse
     
@@ -307,5 +310,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Create and run the Starlette application
-    starlette_app = create_starlette_app(mcp_server, debug=True)
+    #starlette_app = create_starlette_app(mcp_server, debug=True)
     uvicorn.run(starlette_app, host=args.host, port=args.port)
